@@ -9,6 +9,30 @@ function ModalAdd() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const handleSave = () => {
+    const desafiosValue = document.getElementById('desafio').value
+    const descricaoValue = document.getElementById('descricao').value
+
+    let listDesafios = localStorage.getItem('listDesafios');
+    if(listDesafios) {
+      listDesafios = JSON.parse(listDesafios);
+    } else {
+      listDesafios = [];
+    }
+
+    const obj = {
+      desafios: desafiosValue,
+      descricao: descricaoValue,
+    }
+
+    listDesafios.push(obj);
+
+    localStorage.setItem('listDesafios', JSON.stringify(listDesafios));
+
+    alert('Dados salvos');
+    handleClose();
+  }
 
   return (
     <>
@@ -20,7 +44,7 @@ function ModalAdd() {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="desafio">
               <Form.Label>Desafio</Form.Label>
               <Form.Control
                 type="text"
@@ -30,7 +54,7 @@ function ModalAdd() {
             </Form.Group>
             <Form.Group
               className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
+              controlId="descricao"
             >
               <Form.Label>Descrição</Form.Label>
               <Form.Control as="textarea" rows={3} 
@@ -43,7 +67,7 @@ function ModalAdd() {
           <Button variant="secondary" onClick={handleClose}>
             Fechar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSave}>
             Salvar
           </Button>
         </Modal.Footer>
