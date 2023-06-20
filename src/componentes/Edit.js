@@ -3,35 +3,33 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function ModalAdd({ onSave }) {
+function Edit({ desafioInicial, onEdit }) {
   const [show, setShow] = useState(false);
-  const [desafio, setDesafio] = useState('');
-  const [descricao, setDescricao] = useState('');
+  const [desafio, setDesafio] = useState(desafioInicial.desafio);
+  const [descricao, setDescricao] = useState(desafioInicial.descricao);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleSave = () => {
-    const obj = {
+    const desafioEditado = {
+      ...desafioInicial,
       desafio,
       descricao,
     };
-
-    onSave(obj);
-
-    setDesafio('');
-    setDescricao('');
-
+    onEdit(desafioEditado);
     handleClose();
   };
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleShow}>Add</Button>
+      <Button variant="secondary" onClick={handleShow}>
+        Editar
+      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicionar Desafio</Modal.Title>
+          <Modal.Title>Editar Desafio</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -69,4 +67,4 @@ function ModalAdd({ onSave }) {
   );
 }
 
-export default ModalAdd;
+export default Edit;
